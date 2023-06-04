@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Penduduk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,7 +21,7 @@ class userController extends Controller
 
     public function pengaduan()
     {
-        $category = categories::all();
+        $category = Category::all();
         return view('Pengaduan', compact('category'));
     }
 
