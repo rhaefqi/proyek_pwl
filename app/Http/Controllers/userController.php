@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Penduduk;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class userController extends Controller
 {
@@ -11,16 +12,16 @@ class userController extends Controller
      * Display a listing of the resource.
      */
 
-    
+
     public function index()
     {
         return view('index');
     }
-    
+
     public function pengaduan()
     {
         $category = categories::all();
-        return view('Pengaduan',compact('category'));
+        return view('Pengaduan', compact('category'));
     }
 
     public function login()
@@ -36,24 +37,24 @@ class userController extends Controller
     public function reg_penduduk(request $request)
     {
         $validated = $request->validate([
-            'nama' =>"required|min:5|max:100",
-            'email' =>"required|min:5|max:100",
-            'nik' =>"required|min:10",
-            'no_hp' =>"required|min:10",
-            'password' =>"required|min:5"
+            'nama' => "required|min:5|max:100",
+            'email' => "required|min:5|max:100",
+            'nik' => "required|min:10",
+            'no_hp' => "required|min:10",
+            'password' => "required|min:5"
         ]);
 
         $new_penduduk = new Penduduk;
-        $new_penduduk ->nama = $request->nama;
-        $new_penduduk ->email = $request->email;
-        $new_penduduk ->nik = $request->nik;
-        $new_penduduk ->no_hp = $request->no_hp;
-        $new_penduduk ->password = $request->password;
-        $new_penduduk ->id = $request->id;
+        $new_penduduk->nama = $request->nama;
+        $new_penduduk->email = $request->email;
+        $new_penduduk->nik = $request->nik;
+        $new_penduduk->no_hp = $request->no_hp;
+        $new_penduduk->password = $request->password;
+        $new_penduduk->id = $request->id;
 
         $new_penduduk->save();
 
-        return redirect('/login')->with('status','Berhasil diregistrasi silahkan login!');
+        return redirect('/login')->with('status', 'Berhasil diregistrasi silahkan login!');
     }
 
     public function login_logic(request $request)
@@ -68,15 +69,16 @@ class userController extends Controller
             'password' => $request->password
         ];
 
-        if (Auth::guard('penduduks')->attempt($data)) {
+        if (Auth::guard('penduduk')->attempt($data)) {
             $request->session()->regenerate();
             // dd($request);
             return redirect()->route('pengaduan');
-
-        } elseif (Auth::guard('web')->attempt($data)) {
-            $request->session()->regenerate();
-            return redirect()->route('mainpage');
-        } else {
+        }
+        //  elseif (Auth::guard('web')->attempt($data)) {
+        //     $request->session()->regenerate();
+        //     return redirect()->route('mainpage');
+        // } 
+        else {
             return redirect()->route('login_user')->with('failed', 'Email atau password salah');
         }
     }

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('lokasi');
             $table->foreignId("category_id")->constrained("categories")->onUpdate("CASCADE")->onDelete("RESTRICT");
             $table->string('gambar')->nullable();
+            $table->boolean('role')->default(false);
             $table->timestamps();
         });
     }
