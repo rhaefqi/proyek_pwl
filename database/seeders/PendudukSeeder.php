@@ -2,11 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Models\Penduduk;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-class Penduduk extends Seeder
+class PendudukSeeder extends Seeder
 {
     /**
      * Run the database seeds.
