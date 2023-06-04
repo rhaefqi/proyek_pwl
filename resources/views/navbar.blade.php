@@ -42,8 +42,11 @@
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
-                        <a style="color:white;font-size:larger;font-weight:200px; " class="nav-link " href="/pengaduan"
-                            role="button" aria-expanded="false">LAYANAN PENGADUAN</a>
+                        @auth
+                            <a style="color:white;font-size:larger;font-weight:200px; " class="nav-link " href="/pengaduan" role="button" aria-expanded="false">LAYANAN PENGADUAN</a>
+                        @else                            
+                            <a style="color:white;font-size:larger;font-weight:200px; " class="nav-link " href="{{ route('login_user') }}" role="button" aria-expanded="false">LAYANAN PENGADUAN</a>
+                        @endauth
                     </li>
                     <li class="nav-item dropdown">
                         <a style="color:white;font-size:larger;font-weight:200px; " class="nav-link dropdown-toggle"
@@ -56,14 +59,17 @@
                     </li>
                     <li class="nav-item dropdown">
                         @can('admin')
-                            @dd('hadeh')
+                            <a style="color:white;font-size:larger;font-weight:200px; " class="nav-link" href="{{ route('logout.admin') }}">LOGOUT</a>
                         @else
-                            <a style="color:white;font-size:larger;font-weight:200px; " class="nav-link dropdown-toggle"
-                                data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">LOGIN</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{ route('login.admin') }}">Administrator</a></li>
-                                <li><a class="dropdown-item" href="#">Layanan Mandiri</a></li>
-                            </ul>
+                            @auth
+                                <a style="color:white;font-size:larger;font-weight:200px; " class="nav-link" href="{{ route('logout') }}">LOGOUT</a>
+                            @else
+                                <a style="color:white;font-size:larger;font-weight:200px; " class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">LOGIN</a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="{{ route('login.admin') }}">Administrator</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('login_user') }}">Penduduk</a></li>
+                                </ul>
+                            @endauth
                         @endcan
                     </li>
                 </ul>
