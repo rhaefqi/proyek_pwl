@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('pengaduans', function (Blueprint $table) {
             $table->id();
             $table->string('judul_laporan');
-            $table->foreignId("penduduk_id")->constrained("penduduks")->onUpdate("CASCADE")->onDelete("RESTRICT");
+            $table->foreignId("penduduk_id")->constrained("users")->onUpdate("CASCADE")->onDelete("CASCADE");
             $table->text('content_laporan');
             $table->string('lokasi');
-            $table->foreignId("category_id")->constrained("categories")->onUpdate("CASCADE")->onDelete("RESTRICT");
+            $table->foreignId("category_id")->constrained("categories")->onUpdate("CASCADE")->onDelete("CASCADE");
             $table->string('gambar')->nullable();
             $table->boolean('role')->default(false);
             $table->timestamps();

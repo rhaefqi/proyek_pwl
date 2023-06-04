@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use illuminate\Support\Facades\Auth;
-use App\Models\Admin;
-use App\Models\Penduduk;
 
-class AdminAuthController extends Controller
-{
+class AdminAuthController extends Controller {
     /**
      * Display a listing of the resource.
      */
@@ -17,27 +15,27 @@ class AdminAuthController extends Controller
     //     $penduduk = penduduk::select('nama', 'nik', 'email', 'no_hp', 'id')->get();
     //     return view('admin.admin', compact('penduduk'));
     // }
-    public function admin()
-    {
-        $penduduk = penduduk::select('nama', 'nik', 'email', 'no_hp', 'id')->get();
-        return view('admin.data', compact('penduduk'));
+    public function tampilanAdmin(){
+        // $penduduk = User::select('nama', 'nik', 'email', 'no_hp', 'id')->get();
+        return "hadeh";
+        // return view('admin.data', compact('penduduk'));
     }
-    public function login()
-    {
+
+    public function login(){
         return view('login_admin');
     }
-    public function login_logic(request $request)
-    {
-        // dd($request->all());
-        $request->validate(([
-            'email' => 'required',
-            'password' => 'required',
-        ]));
+    public function login_logic(Request $request){
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
 
-        $data = [
-            'email' => $request->email,
-            'password' => $request->password
-        ];
+        if(Auth::attempt($credentials)){
+            $request->session()->regenerate();
+            return redirect()->intended('/test2');
+        }
+
+        return redirect()->route('login.admin')->with('failed', 'Email atau password salah');
         // $t = Auth::attempt($data);
         // dd($t);
         // if(Auth::attempt($data)){
@@ -46,17 +44,17 @@ class AdminAuthController extends Controller
         //     return redirect()->route('login.admin')->with('failed', 'Email atau password salah');
         // }
 
-        if (Auth::guard('admin')->attempt($data)) {
-            $request->session()->regenerate();
-            // dd($request);
-            return redirect()->route('admin');
+        // if (Auth::guard('admin')->attempt($data)) {
+        //     $request->session()->regenerate();
+        //     // dd($request);
+        //     return redirect()->route('admin');
 
-        } elseif (Auth::guard('web')->attempt($data)) {
-            $request->session()->regenerate();
-            return redirect()->route('mainpage');
-        } else {
-            return redirect()->route('login.admin')->with('failed', 'Email atau password salah');
-        }
+        // } elseif (Auth::guard('web')->attempt($data)) {
+        //     $request->session()->regenerate();
+        //     return redirect()->route('mainpage');
+        // } else {
+        //     return redirect()->route('login.admin')->with('failed', 'Email atau password salah');
+        // }
     }
 
     public function logout()
@@ -64,9 +62,9 @@ class AdminAuthController extends Controller
         Auth::logout();
         return redirect()->route('mainpage');
     }
-    public function index()
-    {
-        //
+
+    public function index(){
+        return "hadeh";
     }
 
     /**
@@ -115,5 +113,9 @@ class AdminAuthController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function luthfi(){
+        return 'bismillah';
     }
 }

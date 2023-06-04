@@ -58,31 +58,31 @@ class userController extends Controller
         return redirect('/login')->with('status', 'Berhasil diregistrasi silahkan login!');
     }
 
-    public function login_logic(request $request)
-    {
-        $request->validate(([
-            'nik' => 'required',
-            'password' => 'required',
-        ]));
+    // public function login_logic(request $request)
+    // {
+    //     $request->validate(([
+    //         'nik' => 'required',
+    //         'password' => 'required',
+    //     ]));
 
-        $data = [
-            'nik' => $request->nik,
-            'password' => $request->password
-        ];
+    //     $data = [
+    //         'nik' => $request->nik,
+    //         'password' => $request->password
+    //     ];
 
-        if (Auth::guard('penduduk')->attempt($data)) {
-            $request->session()->regenerate();
-            // dd($request);
-            return redirect()->route('pengaduan');
-        }
-        //  elseif (Auth::guard('web')->attempt($data)) {
-        //     $request->session()->regenerate();
-        //     return redirect()->route('mainpage');
-        // } 
-        else {
-            return redirect()->route('login_user')->with('failed', 'Email atau password salah');
-        }
-    }
+    //     if (Auth::guard('penduduk')->attempt($data)) {
+    //         $request->session()->regenerate();
+    //         // dd($request);
+    //         return redirect()->route('pengaduan');
+    //     }
+    //     //  elseif (Auth::guard('web')->attempt($data)) {
+    //     //     $request->session()->regenerate();
+    //     //     return redirect()->route('mainpage');
+    //     // } 
+    //     else {
+    //         return redirect()->route('login_user')->with('failed', 'Email atau password salah');
+    //     }
+    // }
 
     public function logout()
     {
